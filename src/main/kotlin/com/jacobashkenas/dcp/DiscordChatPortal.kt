@@ -7,7 +7,6 @@ import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse.BodyHandlers
 
-@Suppress("unused")
 object DiscordChatPortal: ModInitializer {
     private const val MOD_ID = "dcp"
     private const val URL = "webhook URL"
