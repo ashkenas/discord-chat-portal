@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "dcp",
+  "version": "${version}",
+  "name": "DiscordChatPortal",
+  "description": "Send in-game chat to a discord channel.",
+  "authors": [
+    "Jacob Ashkenas"
+  ],
+  "contact": {
+    "homepage": "https://github.com/ashkenas/discord-chat-portal",
+    "issues": "https://github.com/ashkenas/discord-chat-portal/issues",
+    "sources": "https://github.com/ashkenas/discord-chat-portal"
+  },
+  "license": "GNU AGPLv3",
+  "icon": "assets/DiscordChatPortal/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "com.jacobashkenas.dcp.DiscordChatPortal"
+      }
+    ]
+  },
+  "mixins": [
+    "dcp.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${fabricloader}",
+    "fabric-api": ">=${fabric_api}",
+    "fabric-language-kotlin": ">=${fabric_language_kotlin}",
+    "minecraft": ">=${minecraft}",
+    "java": ">=${java}"
+  }
+}

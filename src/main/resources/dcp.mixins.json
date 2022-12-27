@@ -1,0 +1,9 @@
+{
+  "required": true,
+  "package": "com.jacobashkenas.dcp.mixins",
+  "compatibilityLevel": "JAVA_${java}",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": []
+}
