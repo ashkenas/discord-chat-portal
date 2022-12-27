@@ -14,7 +14,7 @@ object DiscordChatPortal: ModInitializer {
 
     val LOGGER = LogUtils.getLogger()
 
-    fun postMessage(message: String, username: String, uuid: String) {
+    fun postMessage(message: String, username: String) {
         if (this.url.isEmpty()) return;
 
         val request = HttpRequest.newBuilder(URI(url))
@@ -22,7 +22,7 @@ object DiscordChatPortal: ModInitializer {
             .POST(HttpRequest.BodyPublishers.ofString(Gson().toJson(object {
                 val content = message
                 val username = username
-                val avatar_url = "https://mc-heads.net/head/$uuid/left"
+                val avatar_url = "https://mc-heads.net/head/$username/left"
                 val allowed_mentions = object {
                     val parse = IntArray(0)
                 }
