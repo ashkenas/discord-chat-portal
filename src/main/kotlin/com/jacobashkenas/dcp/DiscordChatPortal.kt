@@ -6,13 +6,18 @@ import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse.BodyHandlers
+import java.nio.file.Path
 
 object DiscordChatPortal: ModInitializer {
     private const val MOD_ID = "dcp"
-    private const val URL = "webhook URL"
+    private var url = ""
+
+    val LOGGER = LogUtils.getLogger()
 
     fun postMessage(message: String, username: String, uuid: String) {
-        val request = HttpRequest.newBuilder(URI(URL))
+        if (this.url.isEmpty()) return;
+
+        val request = HttpRequest.newBuilder(URI(url))
             .headers("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(Gson().toJson(object {
                 val content = message
@@ -28,6 +33,9 @@ object DiscordChatPortal: ModInitializer {
     }
 
     override fun onInitialize() {
-        LogUtils.getLogger().info("Initialized.")
+        val props = DCPPropertiesHandler.loadProperties(Path.of("./config/discord-chat-portal.properties"))
+        this.url = props.URL;
+        if (this.url.isNotEmpty())
+            LOGGER.info("Initialized.")
     }
 }
