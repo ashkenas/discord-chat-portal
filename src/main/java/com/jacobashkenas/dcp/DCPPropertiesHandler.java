@@ -11,21 +11,30 @@ public class DCPPropertiesHandler {
     private final Pattern WEBHOOK_URL_PATTERN = Pattern.compile("https://discord\\.com/api/webhooks/[0-9]+/.+");
 
     public final String URL;
+    public final boolean FACE_LEFT;
+
+    public DCPPropertiesHandler() {
+        URL = "";
+        FACE_LEFT = true;
+    }
 
     public DCPPropertiesHandler(Properties properties, Path path) {
         String parsedURL = properties.getProperty("url", "");
         if (!WEBHOOK_URL_PATTERN.matcher(parsedURL).matches()) {
-            DiscordChatPortal.INSTANCE.getLOGGER().info("Invalid webhook URL provided. Must match format: https://discord.com/api/webhooks/<ID>/<token>");
+            DiscordChatPortal.INSTANCE.getLOGGER()
+                    .info("Invalid webhook URL provided. Must match format: https://discord.com/api/webhooks/<ID>/<token>");
             this.URL = "";
         } else {
             this.URL = parsedURL;
         }
+        FACE_LEFT = !properties.getProperty("head-direction", "left").equals("right");
         saveProperties(path, properties);
     }
 
     protected static DCPPropertiesHandler loadProperties(Path path) {
         Properties properties = new Properties();
         properties.setProperty("url", "");
+        properties.setProperty("head-direction", "left");
 
         try {
             InputStream inputStream = Files.newInputStream(path);
@@ -45,7 +54,7 @@ public class DCPPropertiesHandler {
     private static void saveProperties(Path path, Properties properties) {
         try {
             OutputStream outputStream = Files.newOutputStream(path);
-            properties.store(outputStream, "Discord Webhook URL");
+            properties.store(outputStream, "Discord Webhook Config");
 
             if (outputStream != null) {
                 outputStream.close();
